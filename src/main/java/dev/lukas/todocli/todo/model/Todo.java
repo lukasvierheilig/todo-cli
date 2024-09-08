@@ -1,4 +1,4 @@
 package dev.lukas.todocli.todo.model;
 
-public record Todo(Integer id, String contend, boolean completed) {
+public record Todo(long id, String contend, boolean completed) {
 }
