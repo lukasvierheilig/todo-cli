@@ -9,4 +9,22 @@ import java.util.List;
 
 @Command(group = "Todo Commands", description = "Command managing todos.")
 public class TodoCommands {
+
+    private final TodoService todoService;
+
+    public TodoCommands(TodoService todoService) {
+        this.todoService = todoService;
+    }
+
+    @Command(description = "Add a new todo.")
+    public void add(@Option(longNames = "add-todo", required = true) String todo) {
+        this.todoService.add(todo);
+    }
+
+
+    @Command(description = "Show all todos.")
+    public List<Todo> show(@Option(required = false) Long id) {
+        return todoService.show(id);
+    }
+
 }
