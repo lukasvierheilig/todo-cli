@@ -24,7 +24,10 @@ public class TodoCommands {
 
     @Command(description = "Show all todos.")
     public List<Todo> show(@Option(required = false) Long id) {
-        return todoService.show(id);
+        if (id == null) {
+            return todoService.showAll();
+        }
+        return todoService.show(id).stream().toList();
     }
 
 }
