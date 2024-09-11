@@ -21,9 +21,8 @@ public class TodoCommands {
         this.todoService.add(todo);
     }
 
-
-    @Command(description = "Show all todos.")
-    public List<Todo> show(@Option(required = false) Long id) {
+    @Command(description = "List all todos.")
+    public List<Todo> list(@Option(required = false) Long id) {
         if (id == null) {
             return todoService.showAll();
         }
