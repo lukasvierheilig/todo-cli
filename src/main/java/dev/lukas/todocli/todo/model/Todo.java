@@ -3,8 +3,11 @@ package dev.lukas.todocli.todo.model;
 public record Todo(long id, String contend, boolean completed) {
 
     public Todo{
-        if (contend == null || contend.isBlank()) {
-            throw new IllegalArgumentException("Contend cannot be null or blank");
+        if (contend == null) {
+            throw new IllegalArgumentException("Contend must not be null");
+        }
+        if (contend.isBlank()) {
+            throw new IllegalArgumentException("Contend cannot be blank");
         }
     }
 
