@@ -11,10 +11,6 @@ public record Todo(long id, String contend, boolean completed) {
         }
     }
 
-    public String toCsvDataRow() {
-        return String.format("%s,%s,%s", id, contend, completed);
-    }
-
     public static Todo fromCsvRow(String[] row) {
         if (row.length != 3) {
             throw new IllegalArgumentException("Todo csv row must have exactly 3 entries");
