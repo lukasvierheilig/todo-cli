@@ -56,6 +56,34 @@ public class TodoService {
         writeData(data);
     }
 
+    public void complete(Long id, Boolean completed) {
+        Todo updated = readData().stream()
+                .filter(todo -> todo.id() == id)
+                .findFirst()
+                .map(todo -> todo.withCompleted(completed))
+                .orElseThrow(() -> new IllegalArgumentException("No such id: " + id));
+
+        List<Todo> todos = new java.util.ArrayList<>(readData().stream().filter(todo -> todo.id() != id).toList());
+
+        todos.add(updated);
+
+        CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setHeader(HEADERS).build();
+        StandardOpenOption[] options = new StandardOpenOption[]{StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING};
+
+        try (CSVPrinter csvPrinter = new CSVPrinter(
+                Files.newBufferedWriter(csvDataStorePath, options),
+                csvFormat)) {
+            for (Todo data : todos) {
+                csvPrinter.printRecord(data.id(), data.contend(), data.completed());
+            }
+            csvPrinter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
     private Path resolveDataStorePath() {
         String homeDirectory = System.getProperty(SYSTEM_PROPERTY_HOME);
         if (Objects.isNull(homeDirectory) || homeDirectory.isBlank()) {

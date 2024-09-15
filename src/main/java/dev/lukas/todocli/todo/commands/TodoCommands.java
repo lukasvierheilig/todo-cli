@@ -6,6 +6,7 @@ import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
 import java.util.List;
+import java.util.Optional;
 
 @Command(group = "Todo Commands", description = "Command managing todos.")
 public class TodoCommands {
@@ -27,6 +28,14 @@ public class TodoCommands {
             return todoService.showAll();
         }
         return todoService.show(id).stream().toList();
+    }
+
+    @Command(description = "Set complete status for todo.")
+    public void complete(@Option(required = true) Long id, @Option(defaultValue = "true") Boolean completed ) {
+        if (id == null) {
+            throw new IllegalArgumentException("id cannot be null");
+        }
+        todoService.complete(id, Optional.ofNullable(completed).orElse(true));
     }
 
 }

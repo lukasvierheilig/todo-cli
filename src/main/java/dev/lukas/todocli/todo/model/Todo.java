@@ -17,4 +17,8 @@ public record Todo(long id, String contend, boolean completed) {
         }
         return new Todo(Long.parseLong(row[0]), row[1], Boolean.parseBoolean(row[2]));
     }
+
+    public Todo withCompleted(boolean completed) {
+        return new Todo(this.id(), this.contend(), completed);
+    }
 }
