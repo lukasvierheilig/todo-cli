@@ -34,3 +34,6 @@ build/
 
 ### Logs ###
 todo-cli.log
+
+### MacOS ###
+.DS_Store
